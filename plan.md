@@ -8,6 +8,7 @@
 5. Add sound
 6. Add some information
 6. Refine HTML
+6. Refactor the render to status -> view
 7. Improve AI performance
     7.1 Can start from human and computer
     7.2 Computer has some randomism.
