@@ -2,6 +2,7 @@
 let state = Array(9).fill(0);
 let step = 0;
 let isGameOver = false;
+let isComputerThinking = false;
 let audio = new Audio("kata.mp3");
 
 let linesToCheck = [
@@ -22,11 +23,11 @@ for (let i = 0; i < buttons.length; i++) {
 }
 
 function change() {
-    nextBestMove();
+    bestNextMove();
     document.getElementById("change").disabled = true;
     step++;
     render();
-    referee();
+    judge();
 }
 
 function reset() {
@@ -36,6 +37,9 @@ function reset() {
     render();
     document.getElementById("game-info").innerHTML = "Human first";
     document.getElementById("change").disabled = false;
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].style.background = "";
+    }
 }
 
 function render() {
@@ -46,28 +50,29 @@ function render() {
 }
 
 function handleClick(event) {
-    if (!isGameOver && (event.target.innerHTML == "")) {
+    if (!isGameOver && !isComputerThinking && (event.target.innerHTML == "")) {
         state[event.target.id] = (step % 2 === 0) ? 1 : -1;
         document.getElementById("change").disabled = true;
         render();
         audio.play();
         step++;
-        referee();
-        if (step === 9) {
-            return;
-        }
+        judge();
 
-        setTimeout(() => {
-            nextBestMove();
-            render();
-            audio.play();
-            step++;
-            referee();
-        }, 500);
+        if (!isGameOver) {
+            isComputerThinking = true;
+            setTimeout(() => {
+                bestNextMove();
+                render();
+                audio.play();
+                step++;
+                judge();
+                isComputerThinking = false;
+            }, 500);
+        }
     }
 }
 
-function referee() {
+function judge() {
     for (line of linesToCheck) {
         let sum = 0;
         for (let dot of line) {
@@ -75,12 +80,12 @@ function referee() {
         }
         if (sum === 3) {
             document.getElementById("game-info").innerHTML = "X wins!";
-            // displayWinLine(line, true);
+            displayWinLine(line, true);
             isGameOver = true;
             return;
         } else if (sum === -3) {
             document.getElementById("game-info").innerHTML = "O wins!";
-            // displayWinLine(line, false);
+            displayWinLine(line, false);
             isGameOver = true;
             return;
         }
@@ -88,21 +93,20 @@ function referee() {
 
     if (step !== 9) {
         document.getElementById("game-info").innerHTML = "Next move is " + ((step % 2 === 0) ? 'X' : 'O');
-        return;
     } else {
         document.getElementById("game-info").innerHTML = "Draw";
-        return;
+        isGameOver = true;
     }
 }
 
-// function displayWinLine(line, isFirst) {
-//     let color = isFirst ? 'LightGreen' : 'LightPink';
-//     for (let dot of line) {
-//         buttons[dot]['background-color'] = color;
-//     }
-// }
+function displayWinLine(line, isFirst) {
+    let color = isFirst ? 'LightGreen' : 'LightPink';
+    for (let dot of line) {
+        buttons[dot].style.background = color;
+    }
+}
 
-function nextBestMove() {
+function bestNextMove() {
     let piece = (step % 2 === 0) ? 1 : -1;
     // First Move
     if (step === 0) {

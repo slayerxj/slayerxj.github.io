@@ -8,13 +8,13 @@
     float: left;
     font-size: 48px;
     font-weight: bold;
-    line-height: 20vh;
-    height: 20vh;
+    line-height: 15vh;
+    height: 15vh;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 20vh;
+    width: 15vh;
 }
 
 .square:focus {
