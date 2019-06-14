@@ -2,6 +2,7 @@
 let state = Array(9).fill(0);
 let step = 0;
 let isGameOver = false;
+let audio = new Audio("kata.mp3");
 
 let linesToCheck = [
     [0, 1, 2],
@@ -46,16 +47,20 @@ function handleClick(event) {
     if (!isGameOver && (event.target.innerHTML == "")) {
         state[event.target.id] = (step % 2 === 0) ? 1 : -1;
         render();
+        audio.play();
         step++;
         referee();
         if (step === 9) {
             return;
         }
 
-        nextBestMove();
-        step++;
-        render();
-        referee();
+        setTimeout(() => {
+            nextBestMove();
+            render();
+            audio.play();
+            step++;
+            referee();
+        }, 500);
     }
 }
 
