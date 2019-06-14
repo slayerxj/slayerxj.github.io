@@ -75,10 +75,12 @@ function referee() {
         }
         if (sum === 3) {
             document.getElementById("game-info").innerHTML = "X wins!";
+            // displayWinLine(line, true);
             isGameOver = true;
             return;
         } else if (sum === -3) {
             document.getElementById("game-info").innerHTML = "O wins!";
+            // displayWinLine(line, false);
             isGameOver = true;
             return;
         }
@@ -92,6 +94,13 @@ function referee() {
         return;
     }
 }
+
+// function displayWinLine(line, isFirst) {
+//     let color = isFirst ? 'LightGreen' : 'LightPink';
+//     for (let dot of line) {
+//         buttons[dot]['background-color'] = color;
+//     }
+// }
 
 function nextBestMove() {
     let piece = (step % 2 === 0) ? 1 : -1;
