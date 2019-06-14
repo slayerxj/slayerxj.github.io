@@ -23,6 +23,7 @@ for (let i = 0; i < buttons.length; i++) {
 
 function change() {
     nextBestMove();
+    document.getElementById("change").disabled = true;
     step++;
     render();
     referee();
@@ -34,6 +35,7 @@ function reset() {
     isGameOver = false;
     render();
     document.getElementById("game-info").innerHTML = "Human first";
+    document.getElementById("change").disabled = false;
 }
 
 function render() {
@@ -46,6 +48,7 @@ function render() {
 function handleClick(event) {
     if (!isGameOver && (event.target.innerHTML == "")) {
         state[event.target.id] = (step % 2 === 0) ? 1 : -1;
+        document.getElementById("change").disabled = true;
         render();
         audio.play();
         step++;
