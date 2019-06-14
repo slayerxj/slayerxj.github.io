@@ -1,6 +1,7 @@
 
 let state = Array(9).fill(0);
 let step = 0;
+let isGameOver = false;
 
 let linesToCheck = [
     [0, 1, 2],
@@ -19,9 +20,17 @@ for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', handleClick);
 }
 
+function change() {
+    nextBestMove();
+    step++;
+    render();
+    referee();
+}
+
 function reset() {
     state = Array(9).fill(0);
     step = 0;
+    isGameOver = false;
     render();
     document.getElementById("game-info").innerHTML = "Human first";
 }
@@ -34,7 +43,7 @@ function render() {
 }
 
 function handleClick(event) {
-    if (event.target.innerHTML == "") {
+    if (!isGameOver && (event.target.innerHTML == "")) {
         state[event.target.id] = (step % 2 === 0) ? 1 : -1;
         render();
         step++;
@@ -58,9 +67,11 @@ function referee() {
         }
         if (sum === 3) {
             document.getElementById("game-info").innerHTML = "X wins!";
+            isGameOver = true;
             return;
         } else if (sum === -3) {
             document.getElementById("game-info").innerHTML = "O wins!";
+            isGameOver = true;
             return;
         }
     }
@@ -166,7 +177,7 @@ function nextBestMove() {
     }
 
     // Empty side
-    let sides = [0, 2, 6, 8];
+    let sides = [1, 3, 5, 7];
     for (side of sides) {
         if (state[side] === 0) {
             state[side] = piece;

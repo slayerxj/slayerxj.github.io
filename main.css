@@ -1,23 +1,27 @@
-    .square {
-        background: #fff;
-        border: 1px solid #555;
-        float: left;
-        font-size: 36px;
-        font-weight: bold;
-        line-height: 20vh;
-        height: 20vh;
-        margin-right: -1px;
-        margin-top: -1px;
-        padding: 0;
-        text-align: center;
-        width: 20vh;
-    }
+/* #game-info {
+    text-align: center;
+} */
 
-    .square:focus {
-        outline: none;
-    }
+.square {
+    background: #fff;
+    border: 1px solid #555;
+    float: left;
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 20vh;
+    height: 20vh;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 20vh;
+}
 
-    .game-board {
-        display: flex;
-        flex-direction: row;
-    }
+.square:focus {
+    outline: none;
+}
+
+.game-board {
+    display: flex;
+    flex-direction: row;
+}
