@@ -38,13 +38,21 @@ function judge(state) {
     }
 }
 
-function minimax(state, isMax) {
+function minimax(state, isMax, piece) {
     let decision = judge(state);
     switch (decision) {
         case result.xWin:
-            return 1;
+            if (piece === 1) {
+                return 1;
+            } else {
+                return -1;
+            }
         case result.oWin:
-            return -1;
+            if (piece === -1) {
+                return 1;
+            } else {
+                return -1;
+            }
         case result.draw:
             return 0;
         default:
@@ -55,8 +63,8 @@ function minimax(state, isMax) {
         best = -100;
         for (let i = 0; i < 9; i++) {
             if (state[i] === 0) {
-                state[i] = 1;
-                best = Math.max(best, minimax(state, !isMax));
+                state[i] = piece;
+                best = Math.max(best, minimax(state, !isMax, piece));
                 state[i] = 0;
             }
         }
@@ -64,8 +72,8 @@ function minimax(state, isMax) {
         best = 100;
         for (let i = 0; i < 9; i++) {
             if (state[i] === 0) {
-                state[i] = -1;
-                best = Math.min(best, minimax(state, !isMax));
+                state[i] = -piece;
+                best = Math.min(best, minimax(state, !isMax, piece));
                 state[i] = 0;
             }
         }
@@ -89,7 +97,7 @@ function findBestMove(state) {
     for (let i = 0; i < 9; i++) {
         if (state[i] === 0) {
             state[i] = piece;
-            let value = minimax(state, false);
+            let value = minimax(state, false, piece);
             state[i] = 0;
             if (value > bestValue) {
                 bestMove = i;
