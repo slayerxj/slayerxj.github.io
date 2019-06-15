@@ -26,6 +26,6 @@ describe('findBestMove', function () {
     expect(findBestMove([1, 0, -1, 0, -1, 0, 0, 0, 1])).to.equal(6);
   });
   it('9. Should block fork unless going to win or fork', function () {
-    expect(findBestMove([-1, 1, 0, 0, -1, 0, 0, 0, 1])).to.equal(6);
+    expect(findBestMove([-1, 1, 0, 0, -1, 0, 0, 0, 1])).to.be.oneOf([2, 6]);
   });
 });

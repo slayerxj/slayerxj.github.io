@@ -1,5 +1,4 @@
-
-let state = [0, 1, -1, 0, 1, 0, -1, 0, 0];
+let state = Array(9).fill(0);
 let step = 0;
 let isGameOver = false;
 let isComputerThinking = false;
@@ -22,9 +21,9 @@ for (let i = 0; i < buttons.length; i++) {
     buttons[i].id = i;
     buttons[i].addEventListener('click', handleClick);
 }
-render();
+
 function change() {
-    state[0] = 1;
+    state[findBestMove(state)] = 1;
     document.getElementById("change").disabled = true;
     step++;
     render();

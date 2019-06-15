@@ -103,6 +103,27 @@ function findBestMove(state) {
 
     let piece = (step % 2 === 0) ? 1 : -1;
 
+    // First Move
+    if (step === 0) {
+        let candidates = [0, 2, 6, 8];
+        return candidates[Math.floor(Math.random() * candidates.length)];
+    }
+
+    // Win
+    for (line of linesToCheck) {
+        let sum = 0;
+        for (let dot of line) {
+            sum += state[dot];
+        }
+        if (sum === 2 * piece) {
+            for (let dot of line) {
+                if (state[dot] === 0) {
+                    return dot;
+                }
+            }
+        }
+    }
+
     let bestValue = -100;
     let bestMove;
 
