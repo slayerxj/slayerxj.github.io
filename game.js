@@ -3,9 +3,10 @@ let state = Array(9).fill(0);
 let step = 0;
 let isGameOver = false;
 let isComputerThinking = false;
-let audio = new Audio("kata.mp3");
+const audio = new Audio("kata.mp3");
+const result = { undecided: -1, draw: 0, xWin: 1, oWin: 2 };
 
-let linesToCheck = [
+const linesToCheck = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -16,7 +17,7 @@ let linesToCheck = [
     [2, 4, 6]
 ];
 
-let buttons = document.getElementsByClassName("square");
+const buttons = document.getElementsByClassName("square");
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].id = i;
     buttons[i].addEventListener('click', handleClick);
@@ -49,53 +50,68 @@ function render() {
     }
 }
 
+function move() {
+    document.getElementById("change").disabled = true;
+    render();
+    audio.play();
+    step++;
+    let decision = judge();
+    renderResult(decision);
+}
+
 function handleClick(event) {
-    if (!isGameOver && !isComputerThinking && (event.target.innerHTML == "")) {
+    if (!isGameOver && !isComputerThinking && (state[event.target.id] === 0)) {
         state[event.target.id] = (step % 2 === 0) ? 1 : -1;
-        document.getElementById("change").disabled = true;
-        render();
-        audio.play();
-        step++;
-        judge();
+        move();
 
         if (!isGameOver) {
             isComputerThinking = true;
             setTimeout(() => {
                 bestNextMove();
-                render();
-                audio.play();
-                step++;
-                judge();
+                move();
                 isComputerThinking = false;
             }, 500);
         }
     }
 }
 
-function judge() {
-    for (line of linesToCheck) {
-        let sum = 0;
-        for (let dot of line) {
-            sum += state[dot];
-        }
-        if (sum === 3) {
+function renderResult(decision) {
+    switch (decision) {
+        case result.undecided:
+            document.getElementById("game-info").innerHTML = "Next move is " + ((step % 2 === 0) ? 'X' : 'O');
+            break;
+        case result.draw:
+            document.getElementById("game-info").innerHTML = "Draw";
+            break;
+        case result.xWin:
             document.getElementById("game-info").innerHTML = "X wins!";
             displayWinLine(line, true);
-            isGameOver = true;
-            return;
-        } else if (sum === -3) {
+            break;
+        case result.oWin:
             document.getElementById("game-info").innerHTML = "O wins!";
             displayWinLine(line, false);
+            break;
+        default:
+    }
+}
+
+function judge() {
+    for (line of linesToCheck) {
+        let sum = sumLine(line);
+        if (sum === 3) {
             isGameOver = true;
-            return;
+            return result.xWin;
+        } else if (sum === -3) {
+            isGameOver = true;
+            return result.oWin;
         }
     }
 
-    if (step !== 9) {
-        document.getElementById("game-info").innerHTML = "Next move is " + ((step % 2 === 0) ? 'X' : 'O');
-    } else {
-        document.getElementById("game-info").innerHTML = "Draw";
+    if (step === 9) {
         isGameOver = true;
+        return result.draw;
+    } else {
+        return result.undecided;
     }
 }
 
@@ -107,7 +123,12 @@ function displayWinLine(line, isFirst) {
 }
 
 function bestNextMove() {
+
+    // It's possible to write much shorter code, but spliting into several pieces of code is easier to read
+    // And it won't cause performance issues in this specific case.
+    
     let piece = (step % 2 === 0) ? 1 : -1;
+
     // First Move
     if (step === 0) {
         state[0] = piece;
@@ -126,10 +147,7 @@ function bestNextMove() {
 
     // Win
     for (line of linesToCheck) {
-        let sum = 0;
-        for (let dot of line) {
-            sum += state[dot];
-        }
+        let sum = sumLine(line);
         if (sum === 2 * piece) {
             for (let dot of line) {
                 if (state[dot] === 0) {
@@ -142,10 +160,7 @@ function bestNextMove() {
 
     // Block
     for (line of linesToCheck) {
-        let sum = 0;
-        for (let dot of line) {
-            sum += state[dot];
-        }
+        let sum = sumLine(line);
         if (sum === 2 * (-piece)) {
             for (let dot of line) {
                 if (state[dot] === 0) {
@@ -205,4 +220,13 @@ function bestNextMove() {
             return;
         }
     }
+}
+
+function sumLine(line) {
+    let sum = 0;
+    for (let dot of line) {
+        sum += state[dot];
+    }
+
+    return sum;
 }
