@@ -1,0 +1,24 @@
+{
+  "name": "slayerxj.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ai.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slayerxj/slayerxj.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/slayerxj/slayerxj.github.io/issues"
+  },
+  "homepage": "https://github.com/slayerxj/slayerxj.github.io#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4"
+  }
+}

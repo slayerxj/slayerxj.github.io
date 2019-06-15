@@ -67,7 +67,7 @@ function handleClick(event) {
         if (!isGameOver) {
             isComputerThinking = true;
             setTimeout(() => {
-                let bestMove = findBestMove();
+                let bestMove = findBestMove(state);
                 state[bestMove] = (step % 2 === 0) ? 1 : -1;
                 move();
                 isComputerThinking = false;

@@ -1,4 +1,31 @@
-function findBestMove() {
+function findBestMove(state) {
+
+    function sumLine(line) {
+        let sum = 0;
+        for (let dot of line) {
+            sum += state[dot];
+        }
+
+        return sum;
+    }
+
+    let step = 0;
+    for (let i = 0; i < 9; i++) {
+        if (state[i] !== 0) {
+            step++;
+        }
+    }
+
+    const linesToCheck = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
 
     let piece = (step % 2 === 0) ? 1 : -1;
 
