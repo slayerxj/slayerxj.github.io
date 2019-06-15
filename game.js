@@ -4,9 +4,9 @@ let step = 0;
 let isGameOver = false;
 let isComputerThinking = false;
 const audio = new Audio("kata.mp3");
-const result = { undecided: -1, draw: 0, xWin: 1, oWin: 2 };
+var result = { undecided: -1, draw: 0, xWin: 1, oWin: 2 };
 
-const linesToCheck = [
+var linesToCheck = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -28,7 +28,7 @@ function change() {
     document.getElementById("change").disabled = true;
     step++;
     render();
-    judge();
+    judge(state);
 }
 
 function reset() {
@@ -55,7 +55,7 @@ function move() {
     render();
     audio.play();
     step++;
-    let decision = judge();
+    let decision = judge(state);
     renderResult(decision);
 }
 
@@ -82,37 +82,20 @@ function renderResult(decision) {
             document.getElementById("game-info").innerHTML = "Next move is " + ((step % 2 === 0) ? 'X' : 'O');
             break;
         case result.draw:
+            isGameOver = true;
             document.getElementById("game-info").innerHTML = "Draw";
             break;
         case result.xWin:
+            isGameOver = true;
             document.getElementById("game-info").innerHTML = "X wins!";
             displayWinLine(line, true);
             break;
         case result.oWin:
+            isGameOver = true;
             document.getElementById("game-info").innerHTML = "O wins!";
             displayWinLine(line, false);
             break;
         default:
-    }
-}
-
-function judge() {
-    for (line of linesToCheck) {
-        let sum = sumLine(line);
-        if (sum === 3) {
-            isGameOver = true;
-            return result.xWin;
-        } else if (sum === -3) {
-            isGameOver = true;
-            return result.oWin;
-        }
-    }
-
-    if (step === 9) {
-        isGameOver = true;
-        return result.draw;
-    } else {
-        return result.undecided;
     }
 }
 
@@ -121,13 +104,4 @@ function displayWinLine(line, isFirst) {
     for (let dot of line) {
         buttons[dot].style.background = color;
     }
-}
-
-function sumLine(line) {
-    let sum = 0;
-    for (let dot of line) {
-        sum += state[dot];
-    }
-
-    return sum;
 }
