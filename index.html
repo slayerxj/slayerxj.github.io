@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="author" content="Xiong Jie">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script defer src="util.js"></script>
+    <script defer src="render.js"></script>
     <script defer src="ai.js"></script>
     <script defer src="game.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css">
@@ -14,32 +16,12 @@
 </style>
 
 <body>
-    <h1 id="game-info">
-        Human first
-    </h1>
-    <div class="game-board">
-        <div>
-            <div class="board-row">
-                <button class="square"></button>
-                <button class="square"></button>
-                <button class="square"></button>
-            </div>
-            <div class="board-row">
-                <button class="square"></button>
-                <button class="square"></button>
-                <button class="square"></button>
-            </div>
-            <div class="board-row">
-                <button class="square"></button>
-                <button class="square"></button>
-                <button class="square"></button>
-            </div>
-        </div>
+    <div class="center">
+        <canvas id="background"></canvas>
+        <canvas id="board"></canvas>
+        <canvas id="pieces"></canvas>
     </div>
-    <br>
-    <button id="change" onclick="change()">Computer first</button>
-    <div class="divider"></div>
-    <button onclick="reset()">reset</button>
+
 </body>
 
 </html>

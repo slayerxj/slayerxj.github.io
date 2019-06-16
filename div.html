@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Xiong Jie">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script defer src="ai.js"></script>
+    <script defer src="game.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<style type="text/css">
+
+</style>
+
+<body>
+    <h1 id="game-info">
+        Human first
+    </h1>
+    <div class="game-board">
+        <div>
+            <div class="board-row">
+                <button class="square"></button>
+                <button class="square"></button>
+                <button class="square"></button>
+            </div>
+            <div class="board-row">
+                <button class="square"></button>
+                <button class="square"></button>
+                <button class="square"></button>
+            </div>
+            <div class="board-row">
+                <button class="square"></button>
+                <button class="square"></button>
+                <button class="square"></button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <button id="change" onclick="change()">Computer first</button>
+    <div class="divider"></div>
+    <button onclick="reset()">reset</button>
+</body>
+
+</html>

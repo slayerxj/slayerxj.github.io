@@ -1,38 +1,20 @@
-/* #game-info {
-    text-align: center;
-} */
-
-.square {
-    background: #fff;
-    border: 1px solid #555;
-    float: left;
-    font-size: 48px;
-    font-weight: bold;
-    line-height: 15vh;
-    height: 15vh;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 15vh;
+.center {
+    margin: auto;
+    width: 700px;
+    padding: 10px;
+    padding-top: 10vh;
+  }
+  #background,#board, #pieces{
+    position:absolute;
+}
+  #background {
+      z-index: 0;
+  }
+  
+  #board {
+    z-index: 1;
 }
 
-.square:focus {
-    outline: none;
-}
-
-.game-board {
-    display: flex;
-    flex-direction: row;
-}
-
-button {
-    text-transform: uppercase;
-    padding: 1vh;
-}
-
-.divider{
-    width:1vh;
-    height:auto;
-    display:inline-block;
+#pieces {
+    z-index: 2;
 }
