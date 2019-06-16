@@ -76,7 +76,35 @@ function drawX() {
     if (startTime === undefined) {
         startTime = (new Date()).getTime();
     }
-    // piecesCtx.clearRect(point.x, point.y, 68, 68);
+    piecesCtx.clearRect(point.x, point.y, 68, 68);
+    var time = (new Date()).getTime();
+    piecesCtx.strokeStyle = '#545454';
+    piecesCtx.lineWidth = 5.5;
+    piecesCtx.beginPath();
+    piecesCtx.moveTo(point.x + 14, point.y + 14);
+    piecesCtx.lineTo(point.x + 14 + (time - startTime) / drawPieceTime * 40, point.y + 14 + (time - startTime) / drawPieceTime * 40);
+    piecesCtx.stroke();
+
+    piecesCtx.moveTo(point.x + 14 + 40, point.y + 14);
+    piecesCtx.lineTo(point.x + 14 + 40 - (time - startTime) / drawPieceTime * 40, point.y + 14 + (time - startTime) / drawPieceTime * 40);
+    piecesCtx.stroke();
+    piecesCtx.closePath();
+    if ((time - startTime) <= drawPieceTime) {
+        window.requestAnimationFrame(drawX);
+    } else {
+        startTime = undefined;
+    }
+}
+
+function clearBoard() {
+    piecesCtx.clearRect(0, 0, 700, 300);
+}
+
+function drawWinLine() {
+    if (startTime === undefined) {
+        startTime = (new Date()).getTime();
+    }
+    piecesCtx.clearRect(point.x, point.y, 68, 68);
     var time = (new Date()).getTime();
     piecesCtx.strokeStyle = '#545454';
     piecesCtx.lineWidth = 5.5;
