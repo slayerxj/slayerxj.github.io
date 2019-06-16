@@ -5,12 +5,14 @@ let isComputerThinking = false;
 const audio = new Audio("ca.mp3");
 var result = { undecided: -1, draw: 0, xWin: 1, oWin: 2 };
 
+let winnerInfo = {};
+
 function handleClick(event) {
     if (isGameOver) {
         restart();
         return;
     }
-    
+
     const rect = pieces.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
@@ -41,7 +43,6 @@ restartButton.addEventListener('click', () => {
 
 let point;
 function move(index) {
-    // document.getElementById("change").disabled = true;
     let piece = (step % 2 === 0) ? 1 : -1;
     render(index, piece);
     audio.play();
@@ -64,60 +65,21 @@ function restart() {
     step = 0;
     isGameOver = false;
     clearBoard();
+    drawBoard();
 }
 
-// function change() {
-//     state[findBestMove(state)] = 1;
-//     document.getElementById("change").disabled = true;
-//     step++;
-//     render();
-//     judge(state);
-// }
+let changeButton = document.getElementById("b");
+changeButton.addEventListener('click', () => {
+    change();
+});
 
-// function reset() {
-//     state = Array(9).fill(0);
-//     step = 0;
-//     isGameOver = false;
-//     render();
-//     document.getElementById("game-info").innerHTML = "Human first";
-//     document.getElementById("change").disabled = false;
-//     for (let i = 0; i < buttons.length; i++) {
-//         buttons[i].style.background = "";
-//     }
-// }
-
-// function render() {
-//     for (let i = 0; i < buttons.length; i++) {
-//         buttons[i].id = i;
-//         buttons[i].innerHTML = (state[i] !== 0) ? ((state[i] === 1) ? 'X' : 'O') : "";
-//     }
-// }
-
-// function move() {
-//     document.getElementById("change").disabled = true;
-//     render();
-//     audio.play();
-//     step++;
-//     let decision = judge(state);
-//     renderResult(decision);
-// }
-
-// function handleClick(event) {
-//     if (!isGameOver && !isComputerThinking && (state[event.target.id] === 0)) {
-//         state[event.target.id] = (step % 2 === 0) ? 1 : -1;
-//         move();
-
-//         if (!isGameOver) {
-//             isComputerThinking = true;
-//             setTimeout(() => {
-//                 let bestMove = findBestMove(state);
-//                 state[bestMove] = (step % 2 === 0) ? 1 : -1;
-//                 move();
-//                 isComputerThinking = false;
-//             }, 500);
-//         }
-//     }
-// }
+function change() {
+    if (!isGameOver && !isComputerThinking) {
+        let bestMove = findBestMove(state);
+        state[bestMove] = (step % 2 === 0) ? 1 : -1;
+        move(bestMove);
+    }
+}
 
 function renderResult(decision) {
     switch (decision) {
@@ -126,17 +88,17 @@ function renderResult(decision) {
             break;
         case result.draw:
             isGameOver = true;
-            // document.getElementById("game-info").innerHTML = "Draw";
+            drawDraw();
             break;
         case result.xWin:
             isGameOver = true;
-            // document.getElementById("game-info").innerHTML = "X wins!";
-            // displayWinLine(line, true);
+            winnerInfo = collectWinnerInfo();
+            drawVictory();
             break;
         case result.oWin:
             isGameOver = true;
-            // document.getElementById("game-info").innerHTML = "O wins!";
-            // displayWinLine(line, false);
+            winnerInfo = collectWinnerInfo();
+            drawVictory();
             break;
         default:
     }

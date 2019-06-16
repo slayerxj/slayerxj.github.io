@@ -13,6 +13,9 @@
     7.1 Can start from human and computer
     7.2 Computer has some randomism.
 8. Add responsive feature
-9. Can disable sound
+
 # Day3
 9. Use HTML5 canvas to refactor the project
+9. Can disable sound
+9. Investigate why the line is a little longer
+10. Make sure the canvas is center

@@ -53,3 +53,21 @@ function indexToCoordinate(index) {
             return undefined;
     }
 }
+
+function collectWinnerInfo() {
+    let lineType = 0;
+    for (let i = 0; i < linesToCheck.length; i++) {
+        let line = linesToCheck[i];
+        let sum = 0;
+        lineType = i;
+        for (let dot of line) {
+            sum += state[dot];
+        }
+        if (sum === 3) {
+            return { lineType, piece: 1 };
+        } else if (sum === -3) {
+            return { lineType, piece: -1 };
+        }
+    }
+
+}
