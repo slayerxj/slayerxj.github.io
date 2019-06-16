@@ -9,7 +9,7 @@ let winnerInfo = {};
 
 function handleClick(event) {
     if (isGameOver) {
-        restart();
+        // restart();
         return;
     }
 
@@ -67,6 +67,8 @@ function restart() {
     clearBoard();
     drawBoard();
 }
+let defaultButton = document.getElementById('a');
+defaultButton.style = "text-decoration: underline;";
 
 let changeButton = document.getElementById("b");
 changeButton.addEventListener('click', () => {
@@ -74,7 +76,9 @@ changeButton.addEventListener('click', () => {
 });
 
 function change() {
-    if (!isGameOver && !isComputerThinking) {
+    if ((step === 0) && !isGameOver && !isComputerThinking) {
+        defaultButton.style = "text-decoration: none;";
+        changeButton.style = "text-decoration: underline;";
         let bestMove = findBestMove(state);
         state[bestMove] = (step % 2 === 0) ? 1 : -1;
         move(bestMove);
@@ -88,7 +92,9 @@ function renderResult(decision) {
             break;
         case result.draw:
             isGameOver = true;
-            drawDraw();
+            setTimeout(() => {
+                drawDraw();
+            }, 500);
             break;
         case result.xWin:
             isGameOver = true;
