@@ -1,8 +1,10 @@
 .center {
     margin: auto;
-    width: 700px;
+    /* width: 700px; */
     height: 300px;
     padding: 10px;
+    display: flex;
+    justify-content: center;
 }
 
 #background, #board, #pieces {
