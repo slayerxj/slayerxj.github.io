@@ -66,6 +66,8 @@ function restart() {
     isGameOver = false;
     clearBoard();
     drawBoard();
+    defaultButton.style = "text-decoration: underline;";
+    changeButton.style = "text-decoration: none;";
 }
 let defaultButton = document.getElementById('a');
 defaultButton.style = "text-decoration: underline;";
