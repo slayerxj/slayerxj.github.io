@@ -1,5 +1,13 @@
+let canvasWidth = 700;
+if ((document.documentElement.clientWidth < 736) && (document.documentElement.clientWidth > 336)) {
+    canvasWidth = document.documentElement.clientWidth - 36;
+} else if (document.documentElement.clientWidth < 336) {
+    canvasWidth = 300;
+}
 
-const canvasWidth = 700;
+let sdf = document.getElementsByClassName('center')[0];
+sdf.width = canvasWidth + 'px';
+console.log("canvasWidth", canvasWidth);
 const canvasHeight = 300;
 const lineLength = 216;
 const strokeWidth = 6;
@@ -38,17 +46,17 @@ function drawBoard() {
     boardCtx.clearRect(0, 0, canvasWidth, canvasHeight);
     boardCtx.beginPath();
 
-    boardCtx.moveTo(242, 114);
-    boardCtx.lineTo(458, 114);
+    boardCtx.moveTo((canvasWidth - 216) / 2, 114);
+    boardCtx.lineTo((canvasWidth + 216) / 2, 114);
 
-    boardCtx.moveTo(242, 186);
-    boardCtx.lineTo(458, 186);
+    boardCtx.moveTo((canvasWidth - 216) / 2, 186);
+    boardCtx.lineTo((canvasWidth + 216) / 2, 186);
 
-    boardCtx.moveTo(314, 42);
-    boardCtx.lineTo(314, 258);
+    boardCtx.moveTo((canvasWidth - 216) / 2 + 68 + 3, 42);
+    boardCtx.lineTo((canvasWidth - 216) / 2 + 68 + 3, 258);
 
-    boardCtx.moveTo(386, 42);
-    boardCtx.lineTo(386, 258);
+    boardCtx.moveTo(canvasWidth / 2 + 37, 42);
+    boardCtx.lineTo(canvasWidth / 2 + 37, 258);
 
     boardCtx.lineWidth = 6;
     boardCtx.strokeStyle = "#0da192";
@@ -100,7 +108,7 @@ function drawX() {
 }
 
 function clearBoard() {
-    piecesCtx.clearRect(0, 0, 700, 300);
+    piecesCtx.clearRect(0, 0, canvasWidth, canvasHeight);
 }
 
 function drawVictory() {
@@ -128,18 +136,18 @@ function drawWinLine() {
     piecesCtx.lineWidth = 5.5;
     piecesCtx.beginPath();
     if ((winnerInfo.lineType >= 0) && (winnerInfo.lineType <= 2)) {
-        piecesCtx.moveTo(242, 42 + 34 + winnerInfo.lineType * (6 + 68));
-        piecesCtx.lineTo(242 + (time - startTime) / drawWinLineTime * 208, 42 + 34 + winnerInfo.lineType * (6 + 68));
+        piecesCtx.moveTo((canvasWidth - 216) / 2, 42 + 34 + winnerInfo.lineType * (6 + 68));
+        piecesCtx.lineTo((canvasWidth - 216) / 2 + (time - startTime) / drawWinLineTime * 208, 42 + 34 + winnerInfo.lineType * (6 + 68));
     } else if ((winnerInfo.lineType >= 3) && (winnerInfo.lineType <= 5)) {
-        piecesCtx.moveTo(276 + (winnerInfo.lineType - 3) * (6 + 68), 42);
-        piecesCtx.lineTo(276 + (winnerInfo.lineType - 3) * (6 + 68), 42 + (time - startTime) / drawWinLineTime * 208);
+        piecesCtx.moveTo(canvasWidth / 2 - 74 + (winnerInfo.lineType - 3) * (6 + 68), 42);
+        piecesCtx.lineTo(canvasWidth / 2 - 74 + (winnerInfo.lineType - 3) * (6 + 68), 42 + (time - startTime) / drawWinLineTime * 208);
     } else if (winnerInfo.lineType === 6) {
         console.log(6);
-        piecesCtx.moveTo(242, 42);
-        piecesCtx.lineTo(242 + (time - startTime) / drawWinLineTime * lineLengthTrim, 42 + (time - startTime) / drawWinLineTime * lineLengthTrim);
+        piecesCtx.moveTo((canvasWidth - 216) / 2, 42);
+        piecesCtx.lineTo((canvasWidth - 216) / 2 + (time - startTime) / drawWinLineTime * lineLengthTrim, 42 + (time - startTime) / drawWinLineTime * lineLengthTrim);
     } else {
-        piecesCtx.moveTo(458, 42);
-        piecesCtx.lineTo(458 - (time - startTime) / drawWinLineTime * lineLengthTrim, 42 + (time - startTime) / drawWinLineTime * lineLengthTrim);
+        piecesCtx.moveTo((canvasWidth + 216) / 2, 42);
+        piecesCtx.lineTo((canvasWidth + 216) / 2 - (time - startTime) / drawWinLineTime * lineLengthTrim, 42 + (time - startTime) / drawWinLineTime * lineLengthTrim);
     }
 
     piecesCtx.stroke();
@@ -165,25 +173,25 @@ function drawWinner() {
     if (winnerInfo.piece === 1) {
         piecesCtx.strokeStyle = '#545454';
         piecesCtx.beginPath();
-        piecesCtx.moveTo(310, 76);
-        piecesCtx.lineTo(390, 150);
+        piecesCtx.moveTo(canvasWidth / 2 - 40, 76);
+        piecesCtx.lineTo(canvasWidth / 2 + 40, 150);
         piecesCtx.stroke();
 
-        piecesCtx.moveTo(390, 76);
-        piecesCtx.lineTo(310, 150);
+        piecesCtx.moveTo(canvasWidth / 2 + 40, 76);
+        piecesCtx.lineTo(canvasWidth / 2 - 40, 150);
         piecesCtx.stroke();
         piecesCtx.closePath();
     } else {
         piecesCtx.strokeStyle = '#f2ebd3';
         piecesCtx.beginPath();
-        piecesCtx.arc(350, 113, 48, -0.5 * Math.PI, 1.5 * Math.PI);
+        piecesCtx.arc(canvasWidth / 2, 113, 48, -0.5 * Math.PI, 1.5 * Math.PI);
         piecesCtx.stroke();
         piecesCtx.closePath();
     }
 
     piecesCtx.font = "600 32px Arial";
     piecesCtx.fillStyle = "#545454";
-    piecesCtx.fillText("WINS!", 305, 220);
+    piecesCtx.fillText("WINS!", canvasWidth / 2 - 45, 220);
     if ((time - startTime) < drawWinLineTime) {
         window.requestAnimationFrame(drawWinner);
     } else {
@@ -205,24 +213,24 @@ function drawDraw() {
 
     piecesCtx.strokeStyle = '#545454';
     piecesCtx.beginPath();
-    piecesCtx.moveTo(260, 76);
-    piecesCtx.lineTo(340, 150);
+    piecesCtx.moveTo(canvasWidth / 2 - 90, 76);
+    piecesCtx.lineTo(canvasWidth / 2 - 10, 150);
     piecesCtx.stroke();
 
-    piecesCtx.moveTo(340, 76);
-    piecesCtx.lineTo(260, 150);
+    piecesCtx.moveTo(canvasWidth / 2 - 10, 76);
+    piecesCtx.lineTo(canvasWidth / 2 - 90, 150);
     piecesCtx.stroke();
     piecesCtx.closePath();
 
     piecesCtx.strokeStyle = '#f2ebd3';
     piecesCtx.beginPath();
-    piecesCtx.arc(400, 113, 42, -0.5 * Math.PI, 1.5 * Math.PI);
+    piecesCtx.arc(canvasWidth / 2 + 50, 113, 42, -0.5 * Math.PI, 1.5 * Math.PI);
     piecesCtx.stroke();
     piecesCtx.closePath();
 
     piecesCtx.font = "600 32px Arial";
     piecesCtx.fillStyle = "#545454";
-    piecesCtx.fillText("DRAW!", 298, 220);
+    piecesCtx.fillText("DRAW!", canvasWidth / 2 - 52, 220);
     if ((time - startTime) < drawWinLineTime) {
         window.requestAnimationFrame(drawDraw);
     } else {

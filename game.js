@@ -17,6 +17,7 @@ function handleClick(event) {
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
     let index = coordinateToIndex({ x, y });
+    console.log(index)
     if (index === -1) {
         return;
     }
