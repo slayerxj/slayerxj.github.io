@@ -27,9 +27,7 @@ function handleClick(event) {
         if (!isGameOver) {
             isComputerThinking = true;
             setTimeout(() => {
-                let bestMove = findBestMove(state);
-                state[bestMove] = (step % 2 === 0) ? 1 : -1;
-                move(bestMove);
+                computerMove();
                 isComputerThinking = false;
             }, 500);
         }
@@ -76,9 +74,7 @@ xButton.addEventListener('click', () => {
     if ((xButton.style.textDecoration == "none") && !isGameOver && !isComputerThinking) {
         xButton.style.textDecoration  = "underline";
         oButton.style.textDecoration  = "none";
-        let bestMove = findBestMove(state);
-        state[bestMove] = (step % 2 === 0) ? 1 : -1;
-        move(bestMove);
+        computerMove();
     }
 });
 
@@ -88,16 +84,19 @@ oButton.addEventListener('click', () => {
     if ((oButton.style.textDecoration == "none") && !isGameOver && !isComputerThinking) {
         xButton.style.textDecoration  = "none";
         oButton.style.textDecoration  = "underline";
-        let bestMove = findBestMove(state);
-        state[bestMove] = (step % 2 === 0) ? 1 : -1;
-        move(bestMove);
+        computerMove();
     }
 });
+
+function computerMove() {
+    let bestMove = findBestMove(state);
+    state[bestMove] = (step % 2 === 0) ? 1 : -1;
+    move(bestMove);
+}
 
 function renderResult(decision) {
     switch (decision) {
         case result.undecided:
-            // document.getElementById("game-info").innerHTML = "Next move is " + ((step % 2 === 0) ? 'X' : 'O');
             break;
         case result.draw:
             isGameOver = true;

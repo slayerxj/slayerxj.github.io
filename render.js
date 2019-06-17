@@ -5,6 +5,7 @@ const lineLength = 216;
 const strokeWidth = 6;
 const drawPieceTime = 200;
 const drawWinLineTime = 400;
+const lineLengthTrim = 208;
 
 // It seems that the width and height attributes determine the width or height of the canvas's coordinate system,
 // whereas the CSS properties just determine the size of the box in which it will be shown.
@@ -21,18 +22,15 @@ backgroundCtx.fillRect(0, 0, canvasWidth, canvasHeight);
 
 let board = document.getElementById('board');
 var boardCtx = board.getContext("2d");
-
 drawBoard();
-
-let startTime = undefined;
 
 let pieces = document.getElementById('pieces');
 var piecesCtx = pieces.getContext("2d");
-piecesCtx.webkitImageSmoothingEnabled = true;
-
 pieces.addEventListener('click', function (e) {
     handleClick(e);
 });
+
+let startTime = undefined;
 
 function drawBoard() {
     boardCtx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -112,7 +110,6 @@ function drawVictory() {
     }, 500);
 }
 
-let lineLengthTrim = 208;
 function drawWinLine() {
     if (startTime === undefined) {
         startTime = (new Date()).getTime();
