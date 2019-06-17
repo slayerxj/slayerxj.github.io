@@ -66,26 +66,33 @@ function restart() {
     isGameOver = false;
     clearBoard();
     drawBoard();
-    defaultButton.style = "text-decoration: underline;";
-    changeButton.style = "text-decoration: none;";
+    xButton.style = "text-decoration: underline;";
+    oButton.style = "text-decoration: none;";
 }
-let defaultButton = document.getElementById('a');
-defaultButton.style = "text-decoration: underline;";
 
-let changeButton = document.getElementById("b");
-changeButton.addEventListener('click', () => {
-    change();
-});
-
-function change() {
-    if ((step === 0) && !isGameOver && !isComputerThinking) {
-        defaultButton.style = "text-decoration: none;";
-        changeButton.style = "text-decoration: underline;";
+let xButton = document.getElementById('a');
+xButton.style = "text-decoration: underline;";
+xButton.addEventListener('click', () => {
+    if ((xButton.style.textDecoration == "none") && !isGameOver && !isComputerThinking) {
+        xButton.style.textDecoration  = "underline";
+        oButton.style.textDecoration  = "none";
         let bestMove = findBestMove(state);
         state[bestMove] = (step % 2 === 0) ? 1 : -1;
         move(bestMove);
     }
-}
+});
+
+let oButton = document.getElementById("b");
+oButton.style = "text-decoration: none;";
+oButton.addEventListener('click', () => {
+    if ((oButton.style.textDecoration == "none") && !isGameOver && !isComputerThinking) {
+        xButton.style.textDecoration  = "none";
+        oButton.style.textDecoration  = "underline";
+        let bestMove = findBestMove(state);
+        state[bestMove] = (step % 2 === 0) ? 1 : -1;
+        move(bestMove);
+    }
+});
 
 function renderResult(decision) {
     switch (decision) {
